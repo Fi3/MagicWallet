@@ -11,12 +11,12 @@ export type InOut
 
 
 export type WalletModelType = 
-	//
-	// pubKey is the address of the wallet like an IBAN
-	//
-	{ privKey : string
-	, pubKey : string
-	};
+  //
+  // pubKey is the address of the wallet like an IBAN
+  //
+  { privKey : string
+  , pubKey : string
+  };
 
 
 export type TransactionModelType =
@@ -29,7 +29,7 @@ export type TransactionModelType =
 export type ModelModelType =
   { wallet : WalletModelType
 	, transactions : Array<TransactionModelType>
-	};
+  };
 
 // /////////////////////////////////////////////////////////////////////////////
 //
