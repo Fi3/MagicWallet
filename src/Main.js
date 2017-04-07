@@ -9,20 +9,25 @@ import {Wallet, Transaction, Model} from './Models.js'
 
 
 const initialWallet =
-	  { privKey : ''
-		, pubKey : ''
-		}
+  { privKey : ''
+  , pubKey : ''
+  }
 
 
 const inititialTransaction =
-	{ sign : 'In'
-	, amount : 22
-	, counterparty : 'foo'
-	}
+  { sign : 'In'
+  , amount : 22
+  , counterparty : 'foo'
+  }
 
 
 export const initialModel : Model =
   Model.fromJS(
-		{ wallet : initialWallet
-		, transactions : [inititialTransaction]
-    });
+  { wallet : initialWallet
+  , transactions : [inititialTransaction]
+  });
+
+
+// Inintialize View and listen for message
+
+

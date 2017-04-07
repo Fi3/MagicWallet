@@ -1,4 +1,3 @@
-// @flow
 
 
 import React from 'react';
@@ -7,7 +6,13 @@ import ReactDom from 'react-dom';
 // $FlowFixMe
 require('./index.html');
 
+
 const mountNode = document.getElementById('main');
 
 
-ReactDom.render(<View name="Wallet" />, mountNode);
+ReactDom.render(View, mountNode);
+
+
+function(model, view, mountNode) {
+  ReactDom.render(View, mountNode);
+  }
