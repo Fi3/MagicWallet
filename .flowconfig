@@ -1,8 +1,9 @@
 [ignore]
+'./dist'
 
 [include]
 
 [libs]
 
 [options]
-`unsafe.enable_getters_and_setters=true`
+unsafe.enable_getters_and_setters=true
