@@ -3,14 +3,15 @@
 
 import type {InOut} from './Models.js'
 import {Wallet, Transaction, Model} from './Models.js'
+import {View} from './View.js';
 
 
 // Initialize the Model (redux Store)
 
 
 const initialWallet =
-  { privKey : ''
-  , pubKey : ''
+  { privKey : 'initializing ...'
+  , pubKey : 'initializing ...'
   }
 
 
@@ -31,3 +32,9 @@ export const initialModel : Model =
 // Inintialize View and listen for message
 
 
+export function renderPage(model : Model) {
+  return View(model);
+  }
+
+
+export const initialView = renderPage(initialModel);

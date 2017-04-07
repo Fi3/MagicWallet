@@ -2,7 +2,100 @@
 
 
 import * as Immutable from 'immutable';
-import ImmutableModel from 'flow-immutable-models';
+
+
+// Ugly Fix TODO find better solution .Í have copied this type here becaouse
+// webpack complain when I try to import flow-immutable-models
+export type Updater<TProp> = (oldValue: TProp) => TProp;
+
+
+// Ugly Fix TODO find better solution .Í have copied this class here becaouse
+// webpack complain when I try to import flow-immutable-models
+class ImmutableModel {
+  _state: Immutable.Map<string, any>;
+
+  constructor(state: Immutable.Map<any, any>) {
+    this._state = state;
+  }
+
+  getState() {
+    return this._state;
+  }
+
+  clone(value: Immutable.Map<string, any>): this {
+    const constructor = this.constructor;
+    return value === this._state ? this : new constructor(value);
+  }
+
+  get(property: string): any {
+    return this._state.get(property);
+  }
+
+  set(property: string, value: any): this {
+    return this.clone(this._state.set(property, value));
+  }
+
+  update<TProp>(property: string, updater: Updater<TProp>): this {
+    return this.clone(this._state.update(property, updater));
+  }
+
+  getIn(properties: string[]): any {
+    return this._state.getIn(properties);
+  }
+
+  setIn(properties: string[], value: any): this {
+    return this.clone(this._state.setIn(properties, value));
+  }
+
+  updateIn<TProp>(
+    properties: Array<string | number>,
+    notSetValue: TProp | Updater<TProp>,
+    updater?: Updater<TProp>,
+  ): this {
+    return this.clone(this._state.updateIn(properties, notSetValue, updater));
+  }
+
+  has(property: string): boolean {
+    return this._state.has(property);
+  }
+
+  equals(other: any): boolean {
+    return this._state.equals(other);
+  }
+
+  addToMap<TKey, TValue>(property: string, key: TKey, value: TValue): this {
+    const map: Immutable.Map<TKey, TValue> = this.get(property);
+    return this.clone(this._state.set(property, map.set(key, value)));
+  }
+
+  removeFromMap<TKey, TValue>(property: string, key: TKey): this {
+    const map: Immutable.Map<TKey, TValue> = this.get(property);
+    return this.clone(this._state.set(property, map.remove(key)));
+  }
+
+  addToList<TProp>(property: string, value: TProp): this {
+    return this.clone(this._state.update(property, Immutable.List(), lst => lst.push(value)));
+  }
+
+  concatToList<TProp>(property: string, ...value: Array<TProp>): this {
+    return this.clone(this._state.update(property, Immutable.List(), lst => lst.concat(...value)));
+  }
+
+  removeFromList<TProp>(property: string, index: number): this {
+    const list: Immutable.List<TProp> = this.get(property);
+    return this.clone(this._state.set(property, list.remove(index)));
+  }
+
+  addToSet<TProp>(property: string, value: TProp): this {
+    const collection: Immutable.Set<TProp> = this.get(property);
+    return this.clone(this._state.set(property, collection.add(value)));
+  }
+
+  removeFromSet<TProp>(property: string, value: TProp): this {
+    const list: Immutable.Set<TProp> = this.get(property);
+    return this.clone(this._state.set(property, list.remove(value)));
+  }
+}
 
 
 export type InOut
