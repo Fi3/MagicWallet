@@ -11,8 +11,8 @@ import React from 'react';
 //}
 
 const ciccio = {pasticcio: 'Triccio'}
-export const View =
-	( <h1>
-			Hello, {ciccio.pasticcio}!
-		</h1>
-	);
+export const View =(
+  <h1>
+    Hello, {ciccio.pasticcio}!
+  </h1>
+  );
