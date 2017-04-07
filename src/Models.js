@@ -28,7 +28,7 @@ export type TransactionModelType =
 
 export type ModelModelType =
   { wallet : WalletModelType
-	, transactions : Array<TransactionModelType>
+  , transactions : Array<TransactionModelType>
   };
 
 // /////////////////////////////////////////////////////////////////////////////
