@@ -1,4 +1,5 @@
-var path = require("path");
+const path = require('path');
+const WebpackShellPlugin = require('webpack-shell-plugin');
 
 module.exports = {
 	entry: {
@@ -11,6 +12,12 @@ module.exports = {
     filename: "[name].js",
     path: __dirname + "/dist",
   },
+
+  plugins: [
+		new WebpackShellPlugin({
+			onBuildStart : ['jscodeshift -t node_modules/flow-immutable-models/lib/transform.js src/Models.js']
+		})
+  ],
 
   module: {
     loaders: [

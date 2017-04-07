@@ -7,7 +7,6 @@ import ReactDom from 'react-dom';
 // $FlowFixMe
 require('./index.html');
 
-
 const mountNode = document.getElementById('main');
 
 
