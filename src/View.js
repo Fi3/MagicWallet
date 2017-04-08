@@ -1,7 +1,7 @@
 // @flow
 
 
-// For be sure that we are side effect free, views (react compoments) when respond 
+// For be sure that we are side effect free, views (react compoments) when respond
 // to an event must calls mapper(action, payload) and nothing else.
 // TODO this rule should be enforced with static checking or runtime errors
 //
@@ -41,11 +41,105 @@ function Header(props) {
   )}
 
 
+function FirstRow(props) {
+  return (
+    <div className="columns">
+      <div className="column is-one-third">
+        <TxsOutMokup />
+      </div>
+      <div className="column is-one-third">
+        <TxsOutMokup />
+      </div>
+      <div className="column">
+        Third column
+      </div>
+    </div>
+    )}
+
+
 // TODO View is not a type change name with view!!!
 export function View(model : Model, render : Render) {
   function updater(message: Msg) {
     update(model, message, render);
     }
   return (
+  <div>
     <Header />
+    <FirstRow />
+  </div>
 );}
+
+function TxsOutMokup(props) {
+return (
+<table className="table">
+  <thead>
+    <tr>
+      <th><abbr title="PayedTo">Payed To</abbr></th>
+      <th><abbr title="Amount">Amount</abbr></th>
+      <th><abbr title="Currency">Currency</abbr></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Mario</th>
+      <td>38</td>
+      <td>bitcoin</td>
+    </tr>
+    <tr>
+      <th>Mario</th>
+      <td>38</td>
+      <td>bitcoin</td>
+    </tr>
+    <tr>
+      <th>Mario</th>
+      <td>38</td>
+      <td>bitcoin</td>
+    </tr>
+    <tr>
+      <th>Mario</th>
+      <td>38</td>
+      <td>bitcoin</td>
+    </tr>
+    <tr>
+      <th>Mario</th>
+      <td>38</td>
+      <td>bitcoin</td>
+    </tr>
+    <tr>
+      <th>Mario</th>
+      <td>38</td>
+      <td>bitcoin</td>
+    </tr>
+    <tr>
+      <th>Mario</th>
+      <td>38</td>
+      <td>bitcoin</td>
+    </tr>
+    <tr>
+      <th>Mario</th>
+      <td>38</td>
+      <td>bitcoin</td>
+    </tr>
+    <tr>
+      <th>Mario</th>
+      <td>38</td>
+      <td>bitcoin</td>
+    </tr>
+    <tr>
+      <th>Mario</th>
+      <td>38</td>
+      <td>bitcoin</td>
+    </tr>
+    <tr>
+      <th>Mario</th>
+      <td>38</td>
+      <td>bitcoin</td>
+    </tr>
+    <tr>
+      <th>Mario</th>
+      <td>38</td>
+      <td>bitcoin</td>
+    </tr>
+  </tbody>
+</table>
+)}
