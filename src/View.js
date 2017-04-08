@@ -41,6 +41,61 @@ function Header(props) {
   )}
 
 
+function PayTo(props) {
+  return (
+		<div>
+    <div className="columns">
+		  <div className="column">
+		    <div className="field">
+		    	<p className="control">
+		    		<input className="input is-medium" type="text" placeholder="Pay to address">
+		    		</input>
+		    	</p>
+		    </div>
+			</div>
+		  <div className="column">
+		    <div className="field">
+		    	<p className="control">
+		    		<input className="input is-medium" type="text" placeholder="Amount to pay">
+		    		</input>
+		    	</p>
+		    </div>
+			</div>
+		</div>
+    <div className="columns">
+		  <div className="column">
+				<p className="control">
+					<button className="button is-danger is-fullwidth">PAY</button>
+				</p>
+			</div>
+    </div>
+    </div>
+		)}
+
+function Recive(props) {
+  return (
+    <div className="columns">
+		  <div className="column">
+				<p className="control">
+					<button className="button is-primary is-fullwidth">RECIVE</button>
+				</p>
+			</div>
+    </div>
+		)}
+
+function Total(props) {
+  return (
+    <div className="box has-text-centered">
+			<p>
+				<strong>TOTAL AMOUNT</strong>
+			</p>
+			<p>
+				239.7639
+			</p>
+    </div>
+		)}
+
+
 function FirstRow(props) {
   return (
     <div className="columns">
@@ -51,7 +106,21 @@ function FirstRow(props) {
         <TxsOutMokup />
       </div>
       <div className="column">
-        Third column
+        <div className="columns">
+          <div className="column">
+            <PayTo />
+          </div>
+        </div>
+        <div className="columns">
+          <div className="column">
+            <Recive />
+          </div>
+        </div>
+        <div className="columns">
+          <div className="column">
+            <Total />
+          </div>
+        </div>
       </div>
     </div>
     )}
