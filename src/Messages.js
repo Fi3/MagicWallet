@@ -8,6 +8,7 @@ import type {TransactionModelType} from './Models.js'
 
 export type Actions
   = 'Pay'
+  | 'None'
 
 
 export type Payloads
@@ -15,7 +16,8 @@ export type Payloads
 
 
 export type Msg
-  = {type: Actions, payload : TransactionModelType}
+  = {type: 'Pay', payload : TransactionModelType}
+  | {type: 'None', payload : {}}
 
 
 function pay(): Msg {
@@ -31,7 +33,10 @@ function pay(): Msg {
 export function mapper(action: Actions, payload: ?Payloads): Msg {
   switch (action) {
 		case 'Pay':
-      return pay();//Ritrna update(pay) devo passare una funzione all evento
+      return pay();
+
+    case 'None':
+      return {type: action, payload: {}}
 
 		// Make flow check for exhaustiveness ty to gcanti
 		// ref http://stackoverflow.com/questions/40338895/sealed-case-classes-in-flow

@@ -11,6 +11,7 @@ import type {Msg} from './Messages'
 import {Wallet, Transaction, Model} from './Models.js'
 import {mapper} from './Messages.js'
 import {update} from './Update.js'
+import type {Render} from './Main.js'
 
 
 function RenderAddress(props : {wallet: Wallet}) {
@@ -32,9 +33,9 @@ function AddTx(props) {
 
 
 // TODO View is not a type change name with view!!!
-export function View(model : Model) {
+export function View(model : Model, render : Render) {
   function updater(message: Msg) {
-    update(model, message);
+    update(model, message, render);
     }
   return (
   <div>
