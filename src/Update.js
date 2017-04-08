@@ -10,10 +10,10 @@ import {View} from './View.js'
 export function update(model: Model, message: Msg) {
   switch (message.type) {
     case 'Pay':
-      const updatedModel = model.set('transactions', message.payload);
+      const updatedModel = model.set('transactions', Immutable.List([message.payload]));
       const newView = View(updatedModel);
       //console.log(Date.now());
-      //console.log(h.get('transactions'));
+      //console.log(updatedModel.get('transactions'));
       return newView;
 
 		// Make flow check for exhaustiveness ty to gcanti
