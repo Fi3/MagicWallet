@@ -7,8 +7,10 @@
 //
 import React from 'react';
 import type {TransactionModelType, WalletModelType, ModelModelType} from './Models.js';
+import type {Msg} from './Messages'
 import {Wallet, Transaction, Model} from './Models.js'
 import {mapper} from './Messages.js'
+import {update} from './Update.js'
 
 
 function RenderAddress(props : {wallet: Wallet}) {
@@ -21,12 +23,19 @@ function RenderTransaction(props : {transaction: Transaction}) {
 }
 
 
-function AddTx() {
-  return <button onClick={mapper('Pay')}> Pay </button>;
+function AddTx(props) {
+  function addTx() {
+    props.updater(mapper('Pay'))
+    };
+  return <button onClick={addTx}> Pay </button>;
 }
 
 
+// TODO View is not a type change name with view!!!
 export function View(model : Model) {
+  function updater(message: Msg) {
+    update(model, message);
+    }
   return (
   <div>
     <div>
@@ -36,7 +45,7 @@ export function View(model : Model) {
       <RenderTransaction transaction={model.transactions.last()} />
     </div>
     <div>
-      <AddTx />
+      <AddTx updater={updater}/>
     </div>
   </div>
 );}
