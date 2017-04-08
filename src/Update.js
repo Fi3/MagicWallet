@@ -11,9 +11,9 @@ import type {Render} from './Main.js'
 
 export function update(model: Model, message: Msg, render : any) {
   //
-  // `update` take a `Model` and a 'Message` and call render with the updated `Model`
+  // `update` take a `Model` and a 'Message` and call `render` with the updated `Model`
   // or if `Message == 'None` it create the `View` with model.
-  // TODO check if is better never return a `View` and ever call `render` with the updated `Model`
+  // TODO check if is better never return a `View` and always call `render` with the updated `Model`
   // and let the task to create a new `View` to another function
   //
   switch (message.type) {
@@ -23,16 +23,13 @@ export function update(model: Model, message: Msg, render : any) {
       render(updatedModel, mapper('None'));
 
     case 'None':
-      //
-      // never call `update` with `Message = None` this can create infinite loops
-      //
       return View(model, render)
 
-		// Make flow check for exhaustiveness ty to gcanti
-		// ref http://stackoverflow.com/questions/40338895/sealed-case-classes-in-flow
-		// TODO make helper function to reuse this pattern
+    // Make flow check for exhaustiveness ty to gcanti
+    // ref http://stackoverflow.com/questions/40338895/sealed-case-classes-in-flow
+    // TODO make helper function to reuse this pattern
     default:
-			(message.type: empty);
+      (message.type: empty);
       throw 'unknown action';
     };
 }

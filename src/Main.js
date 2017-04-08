@@ -36,8 +36,8 @@ export const initialModel : Model =
 // Initialize app TODO move Render run in Render.js
 
 
-// Little hack for make sure that flow complain if in update when we return a View flow complain
-// if we forgot to pass render at view.
+// Little hack for make sure that flow complain when `update` return a `View`
+// and we forgot to pass `render` to the `view`.
 // TODO find better way to do that
 export type Render
   = 'Render'
@@ -45,14 +45,16 @@ export type Render
 function run(model : Model, message : Msg, update : any, mountNode : any){
   function render(model: Model, message : Msg) : Render {
     //
-    // render is the engine of the app: it can acces at `mountNode` and `update` so when
-    // we pass a `Model` and a `Message` to render it can create a `View` with 
-    // `update` `model` and `message` and than render the `view` beacouse it know `mountNode`.
+    // `render` is the engine of the app: it can acces `mountNode` and `update` so when
+    // we pass  `Model` and  `Message` to `render` it can create a `View` with 
+    // `update` `model` and `message`.
+    // `render` can also render the `view` beacouse it know `mountNode`.
     //
-    // When we call `update` we must pass `render` to `update` becaouse `update` can return 
-    // a `View` or, when `update` change the `model` will call `render` with the new `model`, 
-    // this can also create infite loops
-    // TODO find a method to make sure that will be impossible to have ininite loops with
+    // `Update` return a `view` when `Message` is `None`.
+    // But  when `Message` is `!=None` `update` change the `Model` and than call again `render`
+    // with the new `Model`. For that we have always pass `render` to update. This can also create
+    // infinite loops.
+    // TODO find a solution to make sure that will be impossible to have ininite loops with
     // ..->update->render->update->..
     //
     const newView = update(model, message, render);

@@ -4,6 +4,33 @@
 import * as Immutable from 'immutable';
 
 
+export type InOut
+  = "In"
+  | "Out"
+
+
+export type WalletModelType = 
+  //
+  // pubKey is the address of the wallet like an IBAN
+  //
+  { privKey : string
+  , pubKey : string
+  };
+
+
+export type TransactionModelType =
+  { sign : InOut
+  , amount : number
+  , counterparty : string
+  }
+
+
+export type ModelModelType =
+  { wallet : WalletModelType
+  , transactions : Array<TransactionModelType> //TODO make transactions an immutable list
+  };
+
+
 // Ugly Fix TODO find better solution .Í have copied this type here becaouse
 // webpack complain when I try to import flow-immutable-models
 export type Updater<TProp> = (oldValue: TProp) => TProp;
@@ -96,33 +123,6 @@ class ImmutableModel {
     return this.clone(this._state.set(property, list.remove(value)));
   }
 }
-
-
-export type InOut
-  = "In"
-  | "Out"
-
-
-export type WalletModelType = 
-  //
-  // pubKey is the address of the wallet like an IBAN
-  //
-  { privKey : string
-  , pubKey : string
-  };
-
-
-export type TransactionModelType =
-  { sign : InOut
-  , amount : number
-  , counterparty : string
-  }
-
-
-export type ModelModelType =
-  { wallet : WalletModelType
-  , transactions : Array<TransactionModelType> //TODO make transactions an immutable list
-  };
 
 // /////////////////////////////////////////////////////////////////////////////
 //
