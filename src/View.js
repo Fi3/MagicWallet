@@ -14,22 +14,31 @@ import {update} from './Update.js'
 import type {Render} from './Main.js'
 
 
-function RenderAddress(props : {wallet: Wallet}) {
-  return <h1>{props.wallet.pubKey}</h1>;
+function NewAddress(props) {
+  return <p className="level-item"><a className="button is-success">New Address</a></p>
 }
 
 
-function RenderTransaction(props : {transaction: Transaction}) {
-  return <p>{props.transaction.amount}</p>;
-}
-
-
-function AddTx(props) {
-  function addTx() {
-    props.updater(mapper('Pay'))
-    };
-  return <button onClick={addTx}> Pay </button>;
-}
+function Header(props) {
+  return (
+    <div className="box">
+    <nav className="level">
+      <div className="level-left">
+        <a className="level-item" href="https://github.com/Fi3/magicwallet" target="_blank">
+          <span className="icon is-large is-centred"><i className="fa fa-credit-card" ></i></span>
+        </a>
+      </div>
+      <div className="level-right">
+				<NewAddress />
+        <nav className="level">
+          <a className="level-item" href="https://github.com/Fi3/magicwallet" target="_blank">
+            <span className="icon is-large is-centred"><i className="fa fa-github" ></i></span>
+          </a>
+        </nav>
+      </div>
+    </nav>
+    </div>
+  )}
 
 
 // TODO View is not a type change name with view!!!
@@ -38,15 +47,5 @@ export function View(model : Model, render : Render) {
     update(model, message, render);
     }
   return (
-  <div>
-    <div>
-      <RenderAddress wallet={model.wallet} />
-    </div>
-    <div>
-      <RenderTransaction transaction={model.transactions.last()} />
-    </div>
-    <div>
-      <AddTx updater={updater}/>
-    </div>
-  </div>
+    <Header />
 );}
