@@ -7,9 +7,7 @@ require('./index.html');
 
 const mountNode = document.getElementById('main');
 
-
 ReactDom.render(initialView, mountNode);
-
 
 
 //function(model, view, mountNode) {
