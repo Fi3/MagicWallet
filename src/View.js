@@ -42,6 +42,9 @@ function Header(props) {
 
 
 function PayTo(props) {
+  const buttonStyle = {
+    'width': '20em',
+  };
   return (
 		<div>
     <div className="columns">
@@ -63,22 +66,21 @@ function PayTo(props) {
 			</div>
 		</div>
     <div className="columns">
-		  <div className="column">
-				<p className="control">
-					<button className="button is-danger is-fullwidth">PAY</button>
-				</p>
+		  <div className="column has-text-centered">
+			  <button className="button is-large is-danger" style={buttonStyle}>PAY</button>
 			</div>
     </div>
     </div>
 		)}
 
 function Recive(props) {
+  const buttonStyle = {
+    'width': '20em',
+  };
   return (
     <div className="columns">
-		  <div className="column">
-				<p className="control">
-					<button className="button is-primary is-fullwidth">RECIVE</button>
-				</p>
+		  <div className="column has-text-centered">
+			  <button className="button is-large is-primary" style={buttonStyle}>RECIVE</button>
 			</div>
     </div>
 		)}
