@@ -59,7 +59,7 @@ function PayTo(props) {
 		  <div className="column">
 		    <div className="field">
 		    	<p className="control">
-		    		<input className="input is-medium" type="text" placeholder="Amount to pay">
+		    		<input className="input is-medium" type="number" placeholder="Amount to pay">
 		    		</input>
 		    	</p>
 		    </div>
@@ -78,10 +78,30 @@ function Recive(props) {
     'width': '20em',
   };
   return (
+		<div>
+    <div className="columns">
+		  <div className="column">
+		    <div className="field">
+		    	<p className="control">
+		    		<input className="input is-medium" type="text" placeholder="Recive from">
+		    		</input>
+		    	</p>
+		    </div>
+			</div>
+		  <div className="column">
+		    <div className="field">
+		    	<p className="control">
+		    		<input className="input is-medium" type="number" placeholder="Amount to recive">
+		    		</input>
+		    	</p>
+		    </div>
+			</div>
+		</div>
     <div className="columns">
 		  <div className="column has-text-centered">
 			  <button className="button is-large is-primary" style={buttonStyle}>RECIVE</button>
 			</div>
+    </div>
     </div>
 		)}
 
@@ -158,62 +178,62 @@ return (
     <tr>
       <th>Mario</th>
       <td>38</td>
-      <td>bitcoin</td>
+      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
     </tr>
     <tr>
       <th>Mario</th>
       <td>38</td>
-      <td>bitcoin</td>
+      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
     </tr>
     <tr>
       <th>Mario</th>
       <td>38</td>
-      <td>bitcoin</td>
+      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
     </tr>
     <tr>
       <th>Mario</th>
       <td>38</td>
-      <td>bitcoin</td>
+      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
     </tr>
     <tr>
       <th>Mario</th>
       <td>38</td>
-      <td>bitcoin</td>
+      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
     </tr>
     <tr>
       <th>Mario</th>
       <td>38</td>
-      <td>bitcoin</td>
+      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
     </tr>
     <tr>
       <th>Mario</th>
       <td>38</td>
-      <td>bitcoin</td>
+      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
     </tr>
     <tr>
       <th>Mario</th>
       <td>38</td>
-      <td>bitcoin</td>
+      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
     </tr>
     <tr>
       <th>Mario</th>
       <td>38</td>
-      <td>bitcoin</td>
+      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
     </tr>
     <tr>
       <th>Mario</th>
       <td>38</td>
-      <td>bitcoin</td>
+      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
     </tr>
     <tr>
       <th>Mario</th>
       <td>38</td>
-      <td>bitcoin</td>
+      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
     </tr>
     <tr>
       <th>Mario</th>
       <td>38</td>
-      <td>bitcoin</td>
+      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
     </tr>
   </tbody>
 </table>
