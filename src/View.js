@@ -43,7 +43,8 @@ function Header(props) {
 
 function PayTo(props) {
   const buttonStyle = {
-    'width': '20em',
+    'width': '5em',
+    'textAlign': 'center !important',
   };
   return (
 		<div>
@@ -67,6 +68,7 @@ function PayTo(props) {
 		</div>
     <div className="columns">
 		  <div className="column has-text-centered">
+        {/* TODO text is not centered in safari */}
 			  <button className="button is-large is-danger" style={buttonStyle}>PAY</button>
 			</div>
     </div>
@@ -75,7 +77,7 @@ function PayTo(props) {
 
 function Recive(props) {
   const buttonStyle = {
-    'width': '20em',
+    'width': '5em',
   };
   return (
 		<div>
@@ -99,6 +101,7 @@ function Recive(props) {
 		</div>
     <div className="columns">
 		  <div className="column has-text-centered">
+        {/* TODO text is not centered in safari */}
 			  <button className="button is-large is-primary" style={buttonStyle}>RECIVE</button>
 			</div>
     </div>
@@ -121,7 +124,7 @@ function Total(props) {
 function FirstRow(props) {
   return (
     <div className="columns is-desktop">
-      <div className="column is-two-third">
+      <div className="column">
         <div className="columns is-mobile">
           <div className="column">
             <TxsOutMokup />
@@ -152,6 +155,16 @@ function FirstRow(props) {
     )}
 
 
+function Alert(props) {
+  return (
+    <div className="columns">
+      <div className="column has-text-centered">
+        <a className="button is-outlined is-danger is-large">Amount should be a number</a>
+      </div>
+    </div>
+  )}
+
+
 // TODO View is not a type change name with view!!!
 export function View(model : Model, render : Render) {
   function updater(message: Msg) {
@@ -161,6 +174,7 @@ export function View(model : Model, render : Render) {
   <div>
     <Header />
     <FirstRow />
+    <Alert />
   </div>
 );}
 
