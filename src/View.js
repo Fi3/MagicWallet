@@ -90,7 +90,7 @@ function Total(props) {
 				<strong>TOTAL AMOUNT</strong>
 			</p>
 			<p>
-				239.7639
+        56.56543
 			</p>
     </div>
 		)}
@@ -98,12 +98,16 @@ function Total(props) {
 
 function FirstRow(props) {
   return (
-    <div className="columns">
-      <div className="column is-one-third">
-        <TxsOutMokup />
-      </div>
-      <div className="column is-one-third">
-        <TxsOutMokup />
+    <div className="columns is-desktop">
+      <div className="column is-two-third">
+        <div className="columns is-mobile">
+          <div className="column">
+            <TxsOutMokup />
+          </div>
+          <div className="column">
+            <TxsOutMokup />
+          </div>
+        </div>
       </div>
       <div className="column">
         <div className="columns">
