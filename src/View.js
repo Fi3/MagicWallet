@@ -12,6 +12,7 @@ import type {Amount, Address} from './Models.js'
 import {mapper} from './Messages.js'
 import {update} from './Update.js'
 import type {Render} from './Main.js'
+import type {List} from 'immutable'
 
 
 function NewAddress(props) {
@@ -206,10 +207,10 @@ function FirstRow(props : {model : Model, updater : (Msg) => Render}) {
       <div className="column">
         <div className="columns is-mobile">
           <div className="column">
-            <TxsOutMokup />
+            <TxsOutMokup transactions={props.model.transactions}/>
           </div>
           <div className="column">
-            <TxsOutMokup />
+            <TxsOutMokup transactions={props.model.transactions}/>
           </div>
         </div>
       </div>
@@ -266,77 +267,36 @@ export function View(model : Model, render : Render) {
   }
   }
 
-function TxsOutMokup(props) {
+function TxsOutHead(props) {
+  return (
+    <thead>
+      <tr>
+        <th><abbr title="PayedTo">Payed To</abbr></th>
+        <th><abbr title="Amount">Amount</abbr></th>
+        <th><abbr title="Currency">Currency</abbr></th>
+      </tr>
+    </thead>
+  )}
+
+
+function TxsOutBody(props : {transactions : List<Transaction>}) {
+  function parseTx(tx : Transaction) {
+    return (
+      <tr>
+        <th>{tx.counterparty}</th>
+        <td>{tx.amount}</td>
+        <td><i className="fa fa-btc" aria-hidden="true"></i></td>
+      </tr>
+    )}
+  const txsOut = props.transactions.filter(tx => tx.sign === 'Out').map(parseTx)
+  return <tbody>{txsOut}</tbody>
+}
+  
+
+function TxsOutMokup(props : {transactions : List<Transaction>}) {
 return (
 <table className="table">
-  <thead>
-    <tr>
-      <th><abbr title="PayedTo">Payed To</abbr></th>
-      <th><abbr title="Amount">Amount</abbr></th>
-      <th><abbr title="Currency">Currency</abbr></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Mario</th>
-      <td>38</td>
-      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
-    </tr>
-    <tr>
-      <th>Mario</th>
-      <td>38</td>
-      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
-    </tr>
-    <tr>
-      <th>Mario</th>
-      <td>38</td>
-      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
-    </tr>
-    <tr>
-      <th>Mario</th>
-      <td>38</td>
-      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
-    </tr>
-    <tr>
-      <th>Mario</th>
-      <td>38</td>
-      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
-    </tr>
-    <tr>
-      <th>Mario</th>
-      <td>38</td>
-      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
-    </tr>
-    <tr>
-      <th>Mario</th>
-      <td>38</td>
-      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
-    </tr>
-    <tr>
-      <th>Mario</th>
-      <td>38</td>
-      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
-    </tr>
-    <tr>
-      <th>Mario</th>
-      <td>38</td>
-      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
-    </tr>
-    <tr>
-      <th>Mario</th>
-      <td>38</td>
-      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
-    </tr>
-    <tr>
-      <th>Mario</th>
-      <td>38</td>
-      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
-    </tr>
-    <tr>
-      <th>Mario</th>
-      <td>38</td>
-      <td><i className="fa fa-btc" aria-hidden="true"></i></td>
-    </tr>
-  </tbody>
+  <TxsOutHead />
+  <TxsOutBody transactions={props.transactions}/>
 </table>
 )}
