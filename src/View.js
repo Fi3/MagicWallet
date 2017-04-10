@@ -6,9 +6,9 @@
 // TODO this rule should be enforced with static checking or runtime errors
 //
 import React from 'react';
-import type {TransactionModelType, WalletModelType, ModelModelType} from './Models.js';
 import type {Msg} from './Messages'
-import {Wallet, Transaction, Model} from './Models.js'
+import {Wallet, Transaction, Model, PayForm, ReciveForm} from './Models.js'
+import type {Amount, Address} from './Models.js'
 import {mapper} from './Messages.js'
 import {update} from './Update.js'
 import type {Render} from './Main.js'
@@ -29,7 +29,7 @@ function Header(props) {
         </a>
       </div>
       <div className="level-right">
-				<NewAddress />
+        <NewAddress />
         <nav className="level">
           <a className="level-item" href="https://github.com/Fi3/magicwallet" target="_blank">
             <span className="icon is-large is-centred"><i className="fa fa-github" ></i></span>
@@ -41,87 +41,138 @@ function Header(props) {
   )}
 
 
-function PayTo(props) {
-  const buttonStyle = {
-    'width': '5em',
-    'textAlign': 'center !important',
-  };
+function PayAmountInput(props : {amount : Amount}) {
+  let amount
+  if (props.amount === 'Wrong') {
+    amount = 'This field should be a number';
+  }
+  else if (props.amount != null) {
+    amount = props.amount;
+  }
+  else {
+    amount = 'Amount';
+  }
   return (
-		<div>
-    <div className="columns">
-		  <div className="column">
-		    <div className="field">
-		    	<p className="control">
-		    		<input className="input is-medium" type="text" placeholder="Pay to address">
-		    		</input>
-		    	</p>
-		    </div>
-			</div>
-		  <div className="column">
-		    <div className="field">
-		    	<p className="control">
-		    		<input className="input is-medium" type="number" placeholder="Amount to pay">
-		    		</input>
-		    	</p>
-		    </div>
-			</div>
-		</div>
-    <div className="columns">
-		  <div className="column has-text-centered">
-        {/* TODO text is not centered in safari */}
-			  <button className="button is-large is-danger" style={buttonStyle}>PAY</button>
-			</div>
-    </div>
-    </div>
-		)}
+    <input className="input is-medium" type="number" placeholder={amount}></input>
+  )}
 
-function Recive(props) {
+
+function AddressInput(props : {address : Address, onInput : mixed}) {
+  return (
+    <input className="input is-medium" type="text" placeholder="Address" onInput={props.onInput} value={props.address}></input>
+  )}
+
+
+function PayAddressInput(props : {address : Address, updater : (Msg) => Render}) {
+  function onInput(event) {
+    props.updater(mapper('UpdateAddressPayForm', event.target.value))
+  }
+  return (
+    <AddressInput address={props.address} updater={props.updater} onInput={onInput} />
+  )}
+
+
+function ReciveAddressInput(props : {address : Address, updater : (Msg) => Render}) {
+  function onInput(event) {
+    props.updater(mapper('UpdateAddressReciveForm', event.target.value))
+  }
+  return (
+    <AddressInput address={props.address} updater={props.updater} onInput={onInput} />
+  )}
+
+
+function ReciveAmountInput(props : {amount : Amount}) {
+  let amount
+  if (props.amount === 'Wrong') {
+    amount = 'This field should be a number';
+  }
+  else if (props.amount != null) {
+    amount = props.amount;
+  }
+  else {
+    amount = 'Amount';
+  }
+  return (
+    <input className="input is-medium" type="number" placeholder={amount}></input>
+  )}
+
+
+
+
+function PayButton(props) {
   const buttonStyle = {
     'width': '5em',
-  };
+  }
+  // TODO text is not centered in safari
   return (
-		<div>
-    <div className="columns">
-		  <div className="column">
-		    <div className="field">
-		    	<p className="control">
-		    		<input className="input is-medium" type="text" placeholder="Recive from">
-		    		</input>
-		    	</p>
-		    </div>
-			</div>
-		  <div className="column">
-		    <div className="field">
-		    	<p className="control">
-		    		<input className="input is-medium" type="number" placeholder="Amount to recive">
-		    		</input>
-		    	</p>
-		    </div>
-			</div>
-		</div>
-    <div className="columns">
-		  <div className="column has-text-centered">
-        {/* TODO text is not centered in safari */}
-			  <button className="button is-large is-primary" style={buttonStyle}>RECIVE</button>
-			</div>
+    <button className="button is-large is-danger has-text-centered" style={buttonStyle}>PAY</button>
+  )}
+
+
+function ReciveButton(props) {
+  const buttonStyle = {
+    'width': '5em',
+  }
+  // TODO text is not centered in safari
+  return (
+    <button className="button is-large is-primary has-text-centered" style={buttonStyle}>RECIVE</button>
+  )}
+
+
+function PayTo(props : {payForm : PayForm, updater : (Msg) => Render}) {
+  return (
+    <div>
+      <div className="columns">
+        <div className="column">
+          <PayAddressInput address={props.payForm.address} updater={props.updater}/>
+        </div>
+        <div className="column">
+          <PayAmountInput amount={props.payForm.amount}/>
+        </div>
+      </div>
+      <div className="columns">
+        <div className="column has-text-centered">
+          <PayButton />
+        </div>
+      </div>
     </div>
+   )}
+
+
+function Recive(props : {reciveForm : ReciveForm, updater : (Msg) => Render}) {
+  return (
+    <div>
+      <div className="columns">
+        <div className="column">
+          <ReciveAddressInput address={props.reciveForm.address} updater={props.updater}/>
+        </div>
+        <div className="column">
+          <ReciveAmountInput amount={props.reciveForm.amount}/>
+        </div>
+      </div>
+      <div className="columns">
+        <div className="column has-text-centered">
+          <ReciveButton />
+        </div>
+      </div>
     </div>
-		)}
+    )}
+
 
 function Total(props) {
   return (
     <div className="box has-text-centered">
-			<p>
-				<strong>TOTAL AMOUNT</strong>
-			</p>
-			<p>
+      <p>
+        <strong>TOTAL AMOUNT</strong>
+      </p>
+      <p>
         56.56543
-			</p>
+      </p>
     </div>
-		)}
+    )}
 
 
-function FirstRow(props) {
+function FirstRow(props : {model : Model, updater : (Msg) => Render}) {
   return (
     <div className="columns is-desktop">
       <div className="column">
@@ -137,12 +188,12 @@ function FirstRow(props) {
       <div className="column">
         <div className="columns">
           <div className="column">
-            <PayTo />
+            <PayTo payForm={props.model.payForm} updater={props.updater}/>
           </div>
         </div>
         <div className="columns">
           <div className="column">
-            <Recive />
+            <Recive reciveForm={props.model.reciveForm} updater={props.updater}/>
           </div>
         </div>
         <div className="columns">
@@ -167,14 +218,13 @@ function Alert(props) {
 
 // TODO View is not a type change name with view!!!
 export function View(model : Model, render : Render) {
-  function updater(message: Msg) {
-    update(model, message, render);
+  function updater(message: Msg): Render {
+    return update(model, message, render);
     }
   return (
   <div>
     <Header />
-    <FirstRow />
-    <Alert />
+    <FirstRow model={model} updater={updater}/>
   </div>
 );}
 

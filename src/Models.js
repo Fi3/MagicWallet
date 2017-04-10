@@ -9,6 +9,14 @@ export type InOut
   | "Out"
 
 
+export type Amount
+  = ?number
+  | 'Wrong'
+
+
+export type Address
+  = string
+
 export type WalletModelType = 
   //
   // pubKey is the address of the wallet like an IBAN
@@ -25,9 +33,23 @@ export type TransactionModelType =
   }
 
 
+export type PayFormModelType =
+  { address : Address
+  , amount : Amount
+  }
+
+
+export type ReciveFormModelType =
+  { address : Address
+  , amount : Amount
+  }
+
+
 export type ModelModelType =
   { wallet : WalletModelType
   , transactions : Array<TransactionModelType> //TODO make transactions an immutable list
+  , payForm : PayFormModelType
+  , reciveForm : ReciveFormModelType
   };
 
 
@@ -222,6 +244,8 @@ export class Model extends ImmutableModel {
     const state: Object = Object.assign({}, json);
     state.wallet = Wallet.fromJS(state.wallet);
     state.transactions = Immutable.List(state.transactions).map(item => Transaction.fromJS(item));
+    state.payForm = PayForm.fromJS(state.payForm);
+    state.reciveForm = ReciveForm.fromJS(state.reciveForm);
     return new this(Immutable.Map(state));
   }
 
@@ -229,6 +253,8 @@ export class Model extends ImmutableModel {
     return {
       wallet: this.wallet.toJS(),
       transactions: this.transactions.toArray().map(item => item.toJS()),
+      payForm: this.payForm.toJS(),
+      reciveForm: this.reciveForm.toJS(),
     };
   }
 
@@ -246,5 +272,97 @@ export class Model extends ImmutableModel {
 
   setTransactions(transactions: Immutable.List<Transaction>): this {
     return this.clone(this._state.set('transactions', transactions));
+  }
+
+  get payForm(): PayForm {
+    return this._state.get('payForm');
+  }
+
+  setPayForm(payForm: PayForm): this {
+    return this.clone(this._state.set('payForm', payForm));
+  }
+
+  get reciveForm(): ReciveForm {
+    return this._state.get('reciveForm');
+  }
+
+  setReciveForm(reciveForm: ReciveForm): this {
+    return this.clone(this._state.set('reciveForm', reciveForm));
+  }
+}
+
+// /////////////////////////////////////////////////////////////////////////////
+//
+// NOTE: THIS CLASS IS GENERATED. DO NOT MAKE CHANGES HERE.
+//
+// If you need to update this class, update the corresponding flow type above
+// and re-run the flow-immutable-models codemod
+//
+// /////////////////////////////////////////////////////////////////////////////
+export class PayForm extends ImmutableModel {
+  static fromJS(json: PayFormModelType): PayForm {
+    const state: Object = Object.assign({}, json);
+    return new this(Immutable.Map(state));
+  }
+
+  toJS(): PayFormModelType {
+    return {
+      address: this.address,
+      amount: this.amount,
+    };
+  }
+
+  get address(): Address {
+    return this._state.get('address');
+  }
+
+  setAddress(address: Address): this {
+    return this.clone(this._state.set('address', address));
+  }
+
+  get amount(): Amount {
+    return this._state.get('amount');
+  }
+
+  setAmount(amount: Amount): this {
+    return this.clone(this._state.set('amount', amount));
+  }
+}
+
+// /////////////////////////////////////////////////////////////////////////////
+//
+// NOTE: THIS CLASS IS GENERATED. DO NOT MAKE CHANGES HERE.
+//
+// If you need to update this class, update the corresponding flow type above
+// and re-run the flow-immutable-models codemod
+//
+// /////////////////////////////////////////////////////////////////////////////
+export class ReciveForm extends ImmutableModel {
+  static fromJS(json: ReciveFormModelType): ReciveForm {
+    const state: Object = Object.assign({}, json);
+    return new this(Immutable.Map(state));
+  }
+
+  toJS(): ReciveFormModelType {
+    return {
+      address: this.address,
+      amount: this.amount,
+    };
+  }
+
+  get address(): Address {
+    return this._state.get('address');
+  }
+
+  setAddress(address: Address): this {
+    return this.clone(this._state.set('address', address));
+  }
+
+  get amount(): Amount {
+    return this._state.get('amount');
+  }
+
+  setAmount(amount: Amount): this {
+    return this.clone(this._state.set('amount', amount));
   }
 }

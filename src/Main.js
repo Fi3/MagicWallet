@@ -30,6 +30,14 @@ export const initialModel : Model =
   Model.fromJS(
   { wallet : initialWallet
   , transactions : [inititialTransaction]
+  , payForm :
+    { address : ''
+    , amount : null
+    }
+  , reciveForm :
+    { address : ''
+    , amount : null
+    }
   });
 
 
