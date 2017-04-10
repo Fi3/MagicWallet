@@ -23,7 +23,7 @@ export type Payloads
 
 
 export type Msg
-  = {type: 'Pay', payload : TransactionModelType}
+  = {type: 'Pay', payload : null}
   | {type: 'None', payload : {}}
   | {type: 'UpdateAddressPayForm', payload: Address}
   | {type: 'UpdateAddressReciveForm', payload: Address}
@@ -36,12 +36,7 @@ export type Msg
 export function mapper(action: Actions, payload : ?Payloads): Msg {
   switch (action) {
     case 'Pay':
-      const tx =
-        { sign : 'In'
-        , amount : 23
-        , counterparty : 'gas'
-        };
-      return {type: 'Pay', payload: tx};
+      return {type: 'Pay', payload: null};
 
     case 'None':
       return {type: action, payload: {}}

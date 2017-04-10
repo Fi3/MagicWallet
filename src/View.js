@@ -112,12 +112,15 @@ function ReciveAddressInput(props : {address : Address, updater : (Msg) => Rende
 
 
 function PayButton(props : {updater : (Msg) => Render}) {
+  function onClick() {
+    props.updater(mapper('Pay'))
+  }
   const buttonStyle = {
     'width': '5em',
   }
   // TODO text is not centered in safari
   return (
-    <button className="button is-large is-danger has-text-centered" style={buttonStyle}>PAY</button>
+    <button className="button is-large is-danger has-text-centered" style={buttonStyle} onClick={onClick}>PAY</button>
   )}
 
 

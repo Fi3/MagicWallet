@@ -21,9 +21,9 @@ export function update(model: Model, message: Msg, render : any): Render {
   let newView;
   switch (message.type) {
     case 'Pay':
-      updatedModel = model.set('transactions', Immutable.List([message.payload]));
-      newView = View(updatedModel, render);
-      return render(updatedModel, mapper('None'));
+      updatedModel = pay(model)
+      newView = View(updatedModel, render)
+      return render(updatedModel, mapper('None'))
 
     case 'UpdateAddressPayForm':
       updatedModel = model.setIn(['payForm','address'], message.payload);
@@ -97,6 +97,28 @@ function recive(model : Model): Model {
       , amount : model.reciveForm.amount
       , counterparty : model.reciveForm.address
       }
+    const newTxs = model.get('transactions').push(newTx)
+    updatedModel = model.set('transactions', newTxs)
+  }
+  else {
+    updatedModel = model
+  }
+  // TODO flow do not check the below value find out why
+  return updatedModel
+}
+
+
+function pay(model : Model): Model {
+  const hasValidAmount = typeof model.payForm.amount === 'number'
+  const hasValidAddress = model.payForm.address != ''
+  let updatedModel
+  if (hasValidAmount && hasValidAddress) {
+    const newTx =
+      { sign : 'Out'
+      , amount : model.payForm.amount
+      , counterparty : model.payForm.address
+      }
+    console.log(newTx)
     const newTxs = model.get('transactions').push(newTx)
     updatedModel = model.set('transactions', newTxs)
   }
