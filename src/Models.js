@@ -10,7 +10,8 @@ export type InOut
 
 
 export type Amount
-  = ?number
+  = number
+  | ''
   | 'Wrong'
 
 

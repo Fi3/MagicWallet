@@ -11,11 +11,14 @@ export type Actions
   | 'None'
   | 'UpdateAddressPayForm'
   | 'UpdateAddressReciveForm'
+  | 'UpdateAmountPayForm'
+  | 'UpdateAmountReciveForm'
 
 
 export type Payloads
   = Address
   | TransactionModelType
+  | string
 
 
 export type Msg
@@ -23,23 +26,20 @@ export type Msg
   | {type: 'None', payload : {}}
   | {type: 'UpdateAddressPayForm', payload: Address}
   | {type: 'UpdateAddressReciveForm', payload: Address}
-
-
-function pay(): Msg {
-  const tx =
-    { sign : 'In'
-    , amount : 23
-    , counterparty : 'gas'
-    };
-   return {type: 'Pay', payload: tx};
-}
+  | {type: 'UpdateAmountPayForm', payload: string}
+  | {type: 'UpdateAmountReciveForm', payload: string}
 
 
 // TODO check payload with flow!
 export function mapper(action: Actions, payload : ?Payloads): Msg {
   switch (action) {
     case 'Pay':
-      return pay();
+      const tx =
+        { sign : 'In'
+        , amount : 23
+        , counterparty : 'gas'
+        };
+      return {type: 'Pay', payload: tx};
 
     case 'None':
       return {type: action, payload: {}}
@@ -49,6 +49,7 @@ export function mapper(action: Actions, payload : ?Payloads): Msg {
         return {type: 'UpdateAddressPayForm', payload: payload}
       }
       else {
+        console.log('unknown event');
         return {type: 'UpdateAddressPayForm', payload: ''}
       }
 
@@ -57,7 +58,26 @@ export function mapper(action: Actions, payload : ?Payloads): Msg {
         return {type: 'UpdateAddressReciveForm', payload: payload}
       }
       else {
+        console.log('unknown event');
         return {type: 'UpdateAddressReciveForm', payload: ''}
+      }
+
+    case 'UpdateAmountPayForm':
+      if (typeof payload === 'string') {
+        return {type: 'UpdateAmountPayForm', payload: payload}
+      }
+      else {
+        console.log('unknown event');
+        return {type: 'UpdateAmountPayForm', payload: ''}
+      }
+
+    case 'UpdateAmountReciveForm':
+      if (typeof payload === 'string') {
+        return {type: 'UpdateAmountReciveForm', payload: payload}
+      }
+      else {
+        console.log('unknown event');
+        return {type: 'UpdateAmountReciveForm', payload: ''}
       }
 
     // Make flow check for exhaustiveness ty to gcanti

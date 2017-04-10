@@ -16,7 +16,7 @@ import type {Render} from './Main.js'
 
 function NewAddress(props) {
   return <p className="level-item"><a className="button is-success">New Address</a></p>
-}
+  }
 
 
 function Header(props) {
@@ -41,25 +41,43 @@ function Header(props) {
   )}
 
 
-function PayAmountInput(props : {amount : Amount}) {
+function AmountInput(props : {amount : Amount, onInput : mixed}) {
   let amount
+  let placeholder
   if (props.amount === 'Wrong') {
-    amount = 'This field should be a number';
-  }
-  else if (props.amount != null) {
-    amount = props.amount;
+    placeholder = 'Amount should be an int bigger than 0'
+    amount = ''
   }
   else {
-    amount = 'Amount';
+    placeholder = 'Amount'
+    amount = props.amount
   }
   return (
-    <input className="input is-medium" type="number" placeholder={amount}></input>
+    <input className="input is-medium" type="number" placeholder={placeholder} onInput={props.onInput} value={amount}></input>
   )}
 
 
 function AddressInput(props : {address : Address, onInput : mixed}) {
   return (
     <input className="input is-medium" type="text" placeholder="Address" onInput={props.onInput} value={props.address}></input>
+  )}
+
+
+function PayAmountInput(props : {amount : Amount, updater : (Msg) => Render}) {
+  function onInput(event) {
+    props.updater(mapper('UpdateAmountPayForm', event.target.value))
+  }
+  return (
+    <AmountInput amount={props.amount} onInput={onInput} />
+  )}
+
+
+function ReciveAmountInput(props : {amount : Amount, updater : (Msg) => Render}) {
+  function onInput(event) {
+    props.updater(mapper('UpdateAmountReciveForm', event.target.value))
+  }
+  return (
+    <AmountInput amount={props.amount} onInput={onInput} />
   )}
 
 
@@ -79,24 +97,6 @@ function ReciveAddressInput(props : {address : Address, updater : (Msg) => Rende
   return (
     <AddressInput address={props.address} updater={props.updater} onInput={onInput} />
   )}
-
-
-function ReciveAmountInput(props : {amount : Amount}) {
-  let amount
-  if (props.amount === 'Wrong') {
-    amount = 'This field should be a number';
-  }
-  else if (props.amount != null) {
-    amount = props.amount;
-  }
-  else {
-    amount = 'Amount';
-  }
-  return (
-    <input className="input is-medium" type="number" placeholder={amount}></input>
-  )}
-
-
 
 
 function PayButton(props) {
@@ -127,7 +127,7 @@ function PayTo(props : {payForm : PayForm, updater : (Msg) => Render}) {
           <PayAddressInput address={props.payForm.address} updater={props.updater}/>
         </div>
         <div className="column">
-          <PayAmountInput amount={props.payForm.amount}/>
+          <PayAmountInput amount={props.payForm.amount} updater={props.updater}/>
         </div>
       </div>
       <div className="columns">
@@ -147,7 +147,7 @@ function Recive(props : {reciveForm : ReciveForm, updater : (Msg) => Render}) {
           <ReciveAddressInput address={props.reciveForm.address} updater={props.updater}/>
         </div>
         <div className="column">
-          <ReciveAmountInput amount={props.reciveForm.amount}/>
+          <ReciveAmountInput amount={props.reciveForm.amount} updater={props.updater}/>
         </div>
       </div>
       <div className="columns">
@@ -221,12 +221,22 @@ export function View(model : Model, render : Render) {
   function updater(message: Msg): Render {
     return update(model, message, render);
     }
-  return (
-  <div>
-    <Header />
-    <FirstRow model={model} updater={updater}/>
-  </div>
-);}
+  if (model.payForm.amount === 'Wrong' || model.reciveForm.amount === 'Wrong') {
+    return (
+      <div>
+        <Header />
+        <FirstRow model={model} updater={updater}/>
+        <Alert />
+      </div>)
+  }
+  else {
+    return (
+      <div>
+        <Header />
+        <FirstRow model={model} updater={updater}/>
+      </div>)
+  }
+  }
 
 function TxsOutMokup(props) {
 return (

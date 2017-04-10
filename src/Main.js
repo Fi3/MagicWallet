@@ -32,11 +32,11 @@ export const initialModel : Model =
   , transactions : [inititialTransaction]
   , payForm :
     { address : ''
-    , amount : null
+    , amount : ''
     }
   , reciveForm :
     { address : ''
-    , amount : null
+    , amount : ''
     }
   });
 
