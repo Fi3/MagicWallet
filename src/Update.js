@@ -8,6 +8,7 @@ import type {Msg} from './Messages.js'
 import {View} from './View.js'
 import {mapper} from './Messages.js'
 import type {Render} from './Main.js'
+import {moneyInTheWalletAfterTx} from './Utils.js'
 
 
 export function update(model: Model, message: Msg, render : any): Render {
@@ -101,7 +102,7 @@ function recive(model : Model): Model {
     updatedModel = model.set('transactions', newTxs)
   }
   else {
-    updatedModel = model
+    updatedModel = model.set('error', 'All the inputs should be filled')
   }
   // TODO flow do not check the below value find out why
   return updatedModel
@@ -111,8 +112,9 @@ function recive(model : Model): Model {
 function pay(model : Model): Model {
   const hasValidAmount = typeof model.payForm.amount === 'number'
   const hasValidAddress = model.payForm.address != ''
+  const hasEnouphMoney = moneyInTheWalletAfterTx(model) >= 0
   let updatedModel
-  if (hasValidAmount && hasValidAddress) {
+  if (hasValidAmount && hasValidAddress && hasEnouphMoney) {
     const newTx =
       { sign : 'Out'
       , amount : model.payForm.amount
@@ -122,8 +124,11 @@ function pay(model : Model): Model {
     const newTxs = model.get('transactions').push(newTx)
     updatedModel = model.set('transactions', newTxs)
   }
+  else if (!hasEnouphMoney) {
+    updatedModel = model.set('error', 'You have not enough money in the wallet')
+  }
   else {
-    updatedModel = model
+    updatedModel = model.set('error', 'All the inputs should be filled')
   }
   // TODO flow do not check the below value find out why
   return updatedModel

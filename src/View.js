@@ -13,6 +13,7 @@ import {mapper} from './Messages.js'
 import {update} from './Update.js'
 import type {Render} from './Main.js'
 import type {List} from 'immutable'
+import {sumAmount} from './Utils.js'
 
 
 function NewAddress(props) {
@@ -179,15 +180,6 @@ function Recive(props : {reciveForm : ReciveForm, updater : (Msg) => Render}) {
 
 
 function Total(props) {
-  function sumAmount(acc, val) {
-    if (val.sign === 'In'){
-      return acc + val.amount
-    }
-    else{
-      // $FlowFixMe
-      return acc - val.amount
-    }
-  }
   const amount = props.transactions.reduce(sumAmount, 0)
   return (
     <div className="box has-text-centered">
@@ -228,12 +220,12 @@ function TxsOutBody(props : {transactions : List<Transaction>}) {
   
 
 function TxsOut(props : {transactions : List<Transaction>}) {
-return (
-  <table className="table">
-    <TxsOutHead />
-    <TxsOutBody transactions={props.transactions}/>
-  </table>
-  )}
+  return (
+    <table className="table">
+      <TxsOutHead />
+      <TxsOutBody transactions={props.transactions}/>
+    </table>
+    )}
 
 
 function TxsInHead(props) {
@@ -305,11 +297,11 @@ function FirstRow(props : {model : Model, updater : (Msg) => Render}) {
     )}
 
 
-function Alert(props) {
+function Alert(props : {message : string}) {
   return (
     <div className="columns">
       <div className="column has-text-centered">
-        <a className="button is-outlined is-danger is-large">Amount should be a number</a>
+        <a className="button is-outlined is-danger is-large">{props.message}</a>
       </div>
     </div>
   )}
@@ -320,12 +312,12 @@ export function View(model : Model, render : Render) {
   function updater(message: Msg): Render {
     return update(model, message, render);
     }
-  if (model.payForm.amount === 'Wrong' || model.reciveForm.amount === 'Wrong') {
+  if (model.error != null) {
     return (
       <div>
         <Header />
         <FirstRow model={model} updater={updater}/>
-        <Alert />
+        <Alert message={model.error}/>
       </div>)
   }
   else {

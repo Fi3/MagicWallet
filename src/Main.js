@@ -38,6 +38,7 @@ export const initialModel : Model =
     { address : ''
     , amount : ''
     }
+  , error: null
   });
 
 
