@@ -2,8 +2,8 @@
 
 
 import * as Immutable from 'immutable'
-import {Model} from './Models.js'
-import type {Amount} from './Models.js'
+import {Model, ReciveForm} from './Models.js'
+import type {Amount, TransactionModelType} from './Models.js'
 import type {Msg} from './Messages.js'
 import {View} from './View.js'
 import {mapper} from './Messages.js'
@@ -49,6 +49,11 @@ export function update(model: Model, message: Msg, render : any): Render {
       newView = View(updatedModel, render);
       return render(updatedModel, mapper('None'));}
 
+    case 'Recive':
+      updatedModel = recive(model)
+      newView = View(updatedModel, render)
+      return render(updatedModel, mapper('None'))
+
     case 'None':
       {/* $FlowFixMe */}
       return View(model, render)
@@ -79,4 +84,25 @@ function updateAmount(amount : Amount, valueInput : string): Amount {
   else {
     return 'Wrong'
   }
+}
+
+
+function recive(model : Model): Model {
+  const hasValidAmount = typeof model.reciveForm.amount === 'number'
+  const hasValidAddress = model.reciveForm.address != ''
+  let updatedModel
+  if (hasValidAmount && hasValidAddress) {
+    const newTx =
+      { sign : 'In'
+      , amount : model.reciveForm.amount
+      , counterparty : model.reciveForm.address
+      }
+    const newTxs = model.get('transactions').push(newTx)
+    updatedModel = model.set('transactions', newTxs)
+  }
+  else {
+    updatedModel = model
+  }
+  // TODO flow do not check the below value find out why
+  return updatedModel
 }

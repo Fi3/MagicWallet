@@ -29,8 +29,8 @@ export type WalletModelType =
 
 export type TransactionModelType =
   { sign : InOut
-  , amount : number
-  , counterparty : string
+  , amount : Amount
+  , counterparty : Address
   }
 
 
@@ -215,19 +215,19 @@ export class Transaction extends ImmutableModel {
     return this.clone(this._state.set('sign', sign));
   }
 
-  get amount(): number {
+  get amount(): Amount {
     return this._state.get('amount');
   }
 
-  setAmount(amount: number): this {
+  setAmount(amount: Amount): this {
     return this.clone(this._state.set('amount', amount));
   }
 
-  get counterparty(): string {
+  get counterparty(): Address {
     return this._state.get('counterparty');
   }
 
-  setCounterparty(counterparty: string): this {
+  setCounterparty(counterparty: Address): this {
     return this.clone(this._state.set('counterparty', counterparty));
   }
 }

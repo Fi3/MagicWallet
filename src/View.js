@@ -111,7 +111,7 @@ function ReciveAddressInput(props : {address : Address, updater : (Msg) => Rende
   )}
 
 
-function PayButton(props) {
+function PayButton(props : {updater : (Msg) => Render}) {
   const buttonStyle = {
     'width': '5em',
   }
@@ -121,13 +121,16 @@ function PayButton(props) {
   )}
 
 
-function ReciveButton(props) {
+function ReciveButton(props : {updater : (Msg) => Render}) {
+  function onClick() {
+    props.updater(mapper('Recive'))
+  }
   const buttonStyle = {
     'width': '5em',
   }
   // TODO text is not centered in safari
   return (
-    <button className="button is-large is-primary has-text-centered" style={buttonStyle}>RECIVE</button>
+    <button className="button is-large is-primary has-text-centered" style={buttonStyle} onClick={onClick}>RECIVE</button>
   )}
 
 
@@ -144,7 +147,7 @@ function PayTo(props : {payForm : PayForm, updater : (Msg) => Render}) {
       </div>
       <div className="columns">
         <div className="column has-text-centered">
-          <PayButton />
+          <PayButton updater={props.updater}/>
         </div>
       </div>
     </div>
@@ -164,7 +167,7 @@ function Recive(props : {reciveForm : ReciveForm, updater : (Msg) => Render}) {
       </div>
       <div className="columns">
         <div className="column has-text-centered">
-          <ReciveButton />
+          <ReciveButton updater={props.updater}/>
         </div>
       </div>
     </div>
