@@ -68,7 +68,10 @@ function PayAmountInput(props : {amount : Amount, updater : (Msg) => Render}) {
     props.updater(mapper('UpdateAmountPayForm', event.target.value))
   }
   return (
-    <AmountInput amount={props.amount} onInput={onInput} />
+    <div>
+      Amount to pay:
+      <AmountInput amount={props.amount} onInput={onInput} />
+    </div>
   )}
 
 
@@ -77,7 +80,10 @@ function ReciveAmountInput(props : {amount : Amount, updater : (Msg) => Render})
     props.updater(mapper('UpdateAmountReciveForm', event.target.value))
   }
   return (
-    <AmountInput amount={props.amount} onInput={onInput} />
+    <div>
+      Amount to recive:
+      <AmountInput amount={props.amount} onInput={onInput} />
+    </div>
   )}
 
 
@@ -86,7 +92,10 @@ function PayAddressInput(props : {address : Address, updater : (Msg) => Render})
     props.updater(mapper('UpdateAddressPayForm', event.target.value))
   }
   return (
-    <AddressInput address={props.address} updater={props.updater} onInput={onInput} />
+    <div>
+      Who should be payed from you:
+      <AddressInput address={props.address} updater={props.updater} onInput={onInput} />
+    </div>
   )}
 
 
@@ -95,7 +104,10 @@ function ReciveAddressInput(props : {address : Address, updater : (Msg) => Rende
     props.updater(mapper('UpdateAddressReciveForm', event.target.value))
   }
   return (
-    <AddressInput address={props.address} updater={props.updater} onInput={onInput} />
+    <div>
+      Who is paying you:
+      <AddressInput address={props.address} updater={props.updater} onInput={onInput} />
+    </div>
   )}
 
 
