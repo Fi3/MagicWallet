@@ -201,16 +201,86 @@ function Total(props) {
     )}
 
 
+function TxsOutHead(props) {
+  return (
+    <thead>
+      <tr>
+        <th><abbr title="PayedTo">Payed To</abbr></th>
+        <th><abbr title="Amount">Amount</abbr></th>
+        <th><abbr title="Currency">Currency</abbr></th>
+      </tr>
+    </thead>
+  )}
+
+
+function TxsOutBody(props : {transactions : List<Transaction>}) {
+  function parseTx(tx : Transaction) {
+    return (
+      <tr>
+        <th>{tx.counterparty}</th>
+        <td>{tx.amount}</td>
+        <td><i className="fa fa-btc" aria-hidden="true"></i></td>
+      </tr>
+    )}
+  const txsOut = props.transactions.filter(tx => tx.sign === 'Out').map(parseTx)
+  return <tbody>{txsOut}</tbody>
+  }
+  
+
+function TxsOut(props : {transactions : List<Transaction>}) {
+return (
+  <table className="table">
+    <TxsOutHead />
+    <TxsOutBody transactions={props.transactions}/>
+  </table>
+  )}
+
+
+function TxsInHead(props) {
+  return (
+    <thead>
+      <tr>
+        <th><abbr title="RecivedFrom">Recived from</abbr></th>
+        <th><abbr title="Amount">Amount</abbr></th>
+        <th><abbr title="Currency">Currency</abbr></th>
+      </tr>
+    </thead>
+  )}
+
+
+function TxsInBody(props : {transactions : List<Transaction>}) {
+  function parseTx(tx : Transaction) {
+    return (
+      <tr>
+        <th>{tx.counterparty}</th>
+        <td>{tx.amount}</td>
+        <td><i className="fa fa-btc" aria-hidden="true"></i></td>
+      </tr>
+    )}
+  const txsIn = props.transactions.filter(tx => tx.sign === 'In').map(parseTx)
+  return <tbody>{txsIn}</tbody>
+  }
+  
+
+function TxsIn(props : {transactions : List<Transaction>}) {
+return (
+  <table className="table">
+    <TxsInHead />
+    <TxsInBody transactions={props.transactions}/>
+  </table>
+  )}
+
+
 function FirstRow(props : {model : Model, updater : (Msg) => Render}) {
   return (
     <div className="columns is-desktop">
       <div className="column">
         <div className="columns is-mobile">
           <div className="column">
-            <TxsOutMokup transactions={props.model.transactions}/>
+            <TxsIn transactions={props.model.transactions}/>
           </div>
           <div className="column">
-            <TxsOutMokup transactions={props.model.transactions}/>
+            <TxsOut transactions={props.model.transactions}/>
           </div>
         </div>
       </div>
@@ -266,37 +336,3 @@ export function View(model : Model, render : Render) {
       </div>)
   }
   }
-
-function TxsOutHead(props) {
-  return (
-    <thead>
-      <tr>
-        <th><abbr title="PayedTo">Payed To</abbr></th>
-        <th><abbr title="Amount">Amount</abbr></th>
-        <th><abbr title="Currency">Currency</abbr></th>
-      </tr>
-    </thead>
-  )}
-
-
-function TxsOutBody(props : {transactions : List<Transaction>}) {
-  function parseTx(tx : Transaction) {
-    return (
-      <tr>
-        <th>{tx.counterparty}</th>
-        <td>{tx.amount}</td>
-        <td><i className="fa fa-btc" aria-hidden="true"></i></td>
-      </tr>
-    )}
-  const txsOut = props.transactions.filter(tx => tx.sign === 'Out').map(parseTx)
-  return <tbody>{txsOut}</tbody>
-}
-  
-
-function TxsOutMokup(props : {transactions : List<Transaction>}) {
-return (
-<table className="table">
-  <TxsOutHead />
-  <TxsOutBody transactions={props.transactions}/>
-</table>
-)}
