@@ -2,6 +2,7 @@
 
 
 import * as Immutable from 'immutable';
+import type {List} from 'immutable'
 
 
 export type InOut
@@ -17,14 +18,6 @@ export type Amount
 
 export type Address
   = string
-
-export type WalletModelType = 
-  //
-  // pubKey is the address of the wallet like an IBAN
-  //
-  { privKey : string
-  , pubKey : string
-  };
 
 
 export type TransactionModelType =
@@ -47,8 +40,7 @@ export type ReciveFormModelType =
 
 
 export type ModelModelType =
-  { wallet : WalletModelType
-  , transactions : Array<TransactionModelType> //TODO make transactions an immutable list
+  { transactions : Array<TransactionModelType>
   , payForm : PayFormModelType
   , reciveForm : ReciveFormModelType
   , error : string
@@ -148,43 +140,6 @@ class ImmutableModel {
   }
 }
 
-// /////////////////////////////////////////////////////////////////////////////
-//
-// NOTE: THIS CLASS IS GENERATED. DO NOT MAKE CHANGES HERE.
-//
-// If you need to update this class, update the corresponding flow type above
-// and re-run the flow-immutable-models codemod
-//
-// /////////////////////////////////////////////////////////////////////////////
-export class Wallet extends ImmutableModel {
-  static fromJS(json: WalletModelType): Wallet {
-    const state: Object = Object.assign({}, json);
-    return new this(Immutable.Map(state));
-  }
-
-  toJS(): WalletModelType {
-    return {
-      privKey: this.privKey,
-      pubKey: this.pubKey,
-    };
-  }
-
-  get privKey(): string {
-    return this._state.get('privKey');
-  }
-
-  setPrivKey(privKey: string): this {
-    return this.clone(this._state.set('privKey', privKey));
-  }
-
-  get pubKey(): string {
-    return this._state.get('pubKey');
-  }
-
-  setPubKey(pubKey: string): this {
-    return this.clone(this._state.set('pubKey', pubKey));
-  }
-}
 
 // /////////////////////////////////////////////////////////////////////////////
 //
@@ -244,7 +199,6 @@ export class Transaction extends ImmutableModel {
 export class Model extends ImmutableModel {
   static fromJS(json: ModelModelType): Model {
     const state: Object = Object.assign({}, json);
-    state.wallet = Wallet.fromJS(state.wallet);
     state.transactions = Immutable.List(state.transactions).map(item => Transaction.fromJS(item));
     state.payForm = PayForm.fromJS(state.payForm);
     state.reciveForm = ReciveForm.fromJS(state.reciveForm);
@@ -253,20 +207,11 @@ export class Model extends ImmutableModel {
 
   toJS(): ModelModelType {
     return {
-      wallet: this.wallet.toJS(),
       transactions: this.transactions.toArray().map(item => item.toJS()),
       payForm: this.payForm.toJS(),
       reciveForm: this.reciveForm.toJS(),
       error: this.error,
     };
-  }
-
-  get wallet(): Wallet {
-    return this._state.get('wallet');
-  }
-
-  setWallet(wallet: Wallet): this {
-    return this.clone(this._state.set('wallet', wallet));
   }
 
   get transactions(): Immutable.List<Transaction> {

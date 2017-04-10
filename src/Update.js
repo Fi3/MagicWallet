@@ -59,7 +59,7 @@ export function update(model: Model, message: Msg, render : any): Render {
       return render(updatedModel, mapper('None'))
 
     case 'None':
-      {/* $FlowFixMe */}
+      // $FlowFixMe
       return View(model, render)
 
     // Make flow check for exhaustiveness ty to gcanti

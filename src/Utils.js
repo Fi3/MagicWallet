@@ -27,3 +27,35 @@ export  function moneyInTheWalletAfterTx(model : Model): number {
   }
   return amount - outgoingMoney;
  }
+
+
+export function serializer(model : Model) {
+  //
+  // THIS SERIALIZER IS A PROVISIONAL SOLUTION CHANGE IT
+  // this serializer is poor in performance very verbose and har to maintain
+  // has been adopted as a provisional solution because JSON.stringify 
+  // doesn't serialize the object created from flow-immutable-models.
+  // It also seems that toJs doesn't work correctly
+  // TODO figure out how to serialize flow-immutable-models or find anoter
+  // way to use immutable objects with flow
+  //
+  const transactions = model.get('transactions').map(x => x).toJS()
+  const payFormAddress = model.getIn(['payForm', 'address'])
+  const payFormAmount = model.getIn(['payForm', 'amount'])
+  const reciveFormAddress = model.getIn(['reciveForm', 'address'])
+  const reciveFormAmount = model.getIn(['reciveForm', 'amount'])
+  const error = model.get('error')
+  const modelJS =
+    { transactions : transactions
+    , payForm :
+      { address : payFormAddress
+      , amount : payFormAmount
+      }
+    , reciveForm :
+      { address : reciveFormAddress
+      , amount : reciveFormAmount
+      }
+    , error : error
+    }
+  return JSON.stringify(modelJS)
+}

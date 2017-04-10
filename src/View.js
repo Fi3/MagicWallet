@@ -7,7 +7,7 @@
 //
 import React from 'react';
 import type {Msg} from './Messages'
-import {Wallet, Transaction, Model, PayForm, ReciveForm} from './Models.js'
+import {Transaction, Model, PayForm, ReciveForm} from './Models.js'
 import type {Amount, Address} from './Models.js'
 import {mapper} from './Messages.js'
 import {update} from './Update.js'
@@ -17,7 +17,11 @@ import {sumAmount} from './Utils.js'
 
 
 function NewAddress(props) {
-  return <p className="level-item"><a className="button is-success">New Address</a></p>
+  function reset() {
+    localStorage.clear();
+    location.reload();
+  }
+  return <p className="level-item"><a className="button is-success" onClick={reset}>New Address</a></p>
   }
 
 
