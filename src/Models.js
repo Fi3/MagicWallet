@@ -51,7 +51,7 @@ export type ModelModelType =
   , transactions : Array<TransactionModelType> //TODO make transactions an immutable list
   , payForm : PayFormModelType
   , reciveForm : ReciveFormModelType
-  , error : ?string
+  , error : string
   };
 
 
@@ -293,11 +293,11 @@ export class Model extends ImmutableModel {
     return this.clone(this._state.set('reciveForm', reciveForm));
   }
 
-  get error(): ?string {
+  get error(): string {
     return this._state.get('error');
   }
 
-  setError(error: ?string): this {
+  setError(error: string): this {
     return this.clone(this._state.set('error', error));
   }
 }

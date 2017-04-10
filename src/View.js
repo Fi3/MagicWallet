@@ -312,7 +312,7 @@ export function View(model : Model, render : Render) {
   function updater(message: Msg): Render {
     return update(model, message, render);
     }
-  if (model.error != null) {
+  if (model.error != '') {
     return (
       <div>
         <Header />

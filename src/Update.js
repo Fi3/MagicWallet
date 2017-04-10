@@ -20,6 +20,9 @@ export function update(model: Model, message: Msg, render : any): Render {
   //
   let updatedModel;
   let newView;
+  if (message.type != 'None'){
+    model = model.set('error', '')
+  }
   switch (message.type) {
     case 'Pay':
       updatedModel = pay(model)
