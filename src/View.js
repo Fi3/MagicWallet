@@ -178,13 +178,23 @@ function Recive(props : {reciveForm : ReciveForm, updater : (Msg) => Render}) {
 
 
 function Total(props) {
+  function sumAmount(acc, val) {
+    if (val.sign === 'In'){
+      return acc + val.amount
+    }
+    else{
+      // $FlowFixMe
+      return acc - val.amount
+    }
+  }
+  const amount = props.transactions.reduce(sumAmount, 0)
   return (
     <div className="box has-text-centered">
       <p>
         <strong>TOTAL AMOUNT</strong>
       </p>
       <p>
-        56.56543
+        {amount}
       </p>
     </div>
     )}
@@ -216,7 +226,7 @@ function FirstRow(props : {model : Model, updater : (Msg) => Render}) {
         </div>
         <div className="columns">
           <div className="column">
-            <Total />
+            <Total transactions={props.model.transactions}/>
           </div>
         </div>
       </div>
