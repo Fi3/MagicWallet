@@ -20,8 +20,6 @@
   "dependencies": {
     "babel-preset-react": "^6.23.0",
     "flow-immutable-models": "^0.11.5",
-    "immutable": "^3.8.1",
-    "react-redux": "^5.0.3",
-    "redux": "^3.6.0"
+    "immutable": "^3.8.1"
   }
 }
