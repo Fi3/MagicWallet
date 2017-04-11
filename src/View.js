@@ -259,12 +259,12 @@ function TxsInBody(props : {transactions : List<Transaction>}) {
   
 
 function TxsIn(props : {transactions : List<Transaction>}) {
-return (
-  <table className="table">
-    <TxsInHead />
-    <TxsInBody transactions={props.transactions}/>
-  </table>
-  )}
+  return (
+    <table className="table">
+      <TxsInHead />
+      <TxsInBody transactions={props.transactions}/>
+    </table>
+    )}
 
 
 function FirstRow(props : {model : Model, updater : (Msg) => Render}) {
@@ -311,24 +311,45 @@ function Alert(props : {message : string}) {
   )}
 
 
+function EasterEggInput(pros) {
+  return (
+    <div className="modal">
+      <div className="modal-background"></div>
+        <div className="modal-content">
+          <div className="box">
+            <input className="input is-fullwidth" type="text"/>
+          </div>
+        </div>
+      <button className="modal-close"></button>
+    </div>
+  )}
+
+
 // TODO View is not a type change name with view!!!
 export function View(model : Model, render : Render) {
+  function onKeyUp(e) {
+    if (e.key === 'Escape') {
+      console.log('ok')
+    }
+  }
   function updater(message: Msg): Render {
     return update(model, message, render);
     }
   if (model.error != '') {
     return (
-      <div>
+      <div onKeyUp={onKeyUp} tabIndex="0">
         <Header />
-        <FirstRow model={model} updater={updater}/>
         <Alert message={model.error}/>
+        <FirstRow model={model} updater={updater}/>
+        <EasterEggInput />
       </div>)
   }
   else {
     return (
-      <div>
+      <div onKeyUp={onKeyUp} tabIndex="0">
         <Header />
         <FirstRow model={model} updater={updater}/>
+        <EasterEggInput />
       </div>)
   }
   }
