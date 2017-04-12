@@ -14,6 +14,7 @@ import {update} from './Update.js'
 import type {Render} from './Main.js'
 import type {List} from 'immutable'
 import {sumAmount} from './Utils.js'
+import {easterEgg} from './EasterEgg.js'
 
 
 function NewAddress(props) {
@@ -191,7 +192,8 @@ function Total(props) {
         <strong>TOTAL AMOUNT</strong>
       </p>
       <p>
-        {amount}
+        {amount}{" "}
+        <i className="fa fa-btc icon-resize-small" aria-hidden="true"></i>
       </p>
     </div>
     )}
@@ -243,7 +245,7 @@ function TxsInHead(props) {
     </thead>
   )}
 
-
+//TODO use pagination for long list of txs out
 function TxsInBody(props : {transactions : List<Transaction>}) {
   function parseTx(tx : Transaction) {
     return (
@@ -258,6 +260,7 @@ function TxsInBody(props : {transactions : List<Transaction>}) {
   }
   
 
+//TODO use pagination for long list of txs in
 function TxsIn(props : {transactions : List<Transaction>}) {
   return (
     <table className="table">
@@ -278,17 +281,21 @@ function FirstRow(props : {model : Model, updater : (Msg) => Render}) {
           <div className="column">
             <TxsOut transactions={props.model.transactions}/>
           </div>
-        </div>
+      </div>
       </div>
       <div className="column">
         <div className="columns">
           <div className="column">
-            <PayTo payForm={props.model.payForm} updater={props.updater}/>
+            <div className="box">
+              <PayTo payForm={props.model.payForm} updater={props.updater}/>
+            </div>
           </div>
         </div>
         <div className="columns">
           <div className="column">
-            <Recive reciveForm={props.model.reciveForm} updater={props.updater}/>
+            <div className="box">
+              <Recive reciveForm={props.model.reciveForm} updater={props.updater}/>
+            </div>
           </div>
         </div>
         <div className="columns">
@@ -311,16 +318,41 @@ function Alert(props : {message : string}) {
   )}
 
 
-function EasterEggInput(pros) {
+// TODO refactor
+function EasterEggInput(props : {funnyMode: bool, updater : (Msg) => Render, easterEggMessage: string}) {
+  function onClick() {
+    props.updater(mapper('ChangeMode'))
+  }
+  function onClickClear() {
+    props.updater(mapper('UpdateEasterMessage', ''))
+  }
+  function onInput(event) {
+    props.updater(mapper('UpdateEasterMessage', event.target.value))
+  }
+  const className = props.funnyMode ? 'modal is-active' : 'modal'
+  if (props.easterEggMessage !== ':smile') {
+    return (
+      <div className={className}>
+        <div className="modal-background"></div>
+          <div className="modal-content">
+            <div className="box">
+              <input className="input is-fullwidth" type="text" onInput={onInput} value={props.easterEggMessage}/>
+            </div>
+          </div>
+        <button className="modal-close" onClick={onClick} ></button>
+      </div>
+    )}
   return (
-    <div className="modal">
+    <div className={className}>
       <div className="modal-background"></div>
         <div className="modal-content">
           <div className="box">
-            <input className="input is-fullwidth" type="text"/>
+            <pre>
+              {easterEgg}
+            </pre>
           </div>
         </div>
-      <button className="modal-close"></button>
+      <button className="modal-close" onClick={onClickClear}></button>
     </div>
   )}
 
@@ -329,19 +361,19 @@ function EasterEggInput(pros) {
 export function View(model : Model, render : Render) {
   function onKeyUp(e) {
     if (e.key === 'Escape') {
-      console.log('ok')
+      updater(mapper('ChangeMode'))
     }
   }
   function updater(message: Msg): Render {
     return update(model, message, render);
-    }
+  }
   if (model.error != '') {
     return (
       <div onKeyUp={onKeyUp} tabIndex="0">
         <Header />
         <Alert message={model.error}/>
         <FirstRow model={model} updater={updater}/>
-        <EasterEggInput />
+        <EasterEggInput funnyMode={model.funnyMode} updater={updater} easterEggMessage={model.easterEggMessage}/>
       </div>)
   }
   else {
@@ -349,7 +381,8 @@ export function View(model : Model, render : Render) {
       <div onKeyUp={onKeyUp} tabIndex="0">
         <Header />
         <FirstRow model={model} updater={updater}/>
-        <EasterEggInput />
+        <EasterEggInput funnyMode={model.funnyMode} updater={updater} easterEggMessage={model.easterEggMessage}/>
       </div>)
   }
   }
+

@@ -14,6 +14,8 @@ export type Actions
   | 'UpdateAmountPayForm'
   | 'UpdateAmountReciveForm'
   | 'Recive'
+  | 'ChangeMode'
+  | 'UpdateEasterMessage'
 
 
 export type Payloads
@@ -30,6 +32,8 @@ export type Msg
   | {type: 'UpdateAmountPayForm', payload: string}
   | {type: 'UpdateAmountReciveForm', payload: string}
   | {type: 'Recive', payload: null}
+  | {type: 'ChangeMode', payload: null}
+  | {type: 'UpdateEasterMessage', payload: string}
 
 
 // TODO check payload with flow!
@@ -79,6 +83,18 @@ export function mapper(action: Actions, payload : ?Payloads): Msg {
 
     case 'Recive':
       return {type: 'Recive', payload: null}
+
+    case 'ChangeMode':
+      return {type: 'ChangeMode', payload: null}
+
+    case 'UpdateEasterMessage':
+      if (typeof payload === 'string') {
+        return {type: 'UpdateEasterMessage', payload: payload}
+      }
+      else {
+        console.log('unknown event');
+        return {type: 'UpdateEasterMessage', payload: ''}
+      }
 
     // Make flow check for exhaustiveness ty to gcanti
     // ref http://stackoverflow.com/questions/40338895/sealed-case-classes-in-flow

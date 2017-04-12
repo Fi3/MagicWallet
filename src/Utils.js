@@ -45,6 +45,8 @@ export function serializer(model : Model) {
   const reciveFormAddress = model.getIn(['reciveForm', 'address'])
   const reciveFormAmount = model.getIn(['reciveForm', 'amount'])
   const error = model.get('error')
+  const funnyMode = model.get('funnyMode')
+  const easterEggMessage = model.get('easterEggMessage')
   const modelJS =
     { transactions : transactions
     , payForm :
@@ -56,6 +58,8 @@ export function serializer(model : Model) {
       , amount : reciveFormAmount
       }
     , error : error
+    , funnyMode : funnyMode
+    , easterEggMessage : easterEggMessage
     }
   return JSON.stringify(modelJS)
 }

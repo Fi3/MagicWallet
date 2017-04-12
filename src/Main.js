@@ -31,6 +31,8 @@ const mode =
     , amount : ''
     }
   , error: ''
+  , funnyMode: false
+  , easterEggMessage: ''
   }
 
 

@@ -58,6 +58,17 @@ export function update(model: Model, message: Msg, render : any): Render {
       newView = View(updatedModel, render)
       return render(updatedModel, mapper('None'))
 
+    case 'ChangeMode':
+      const funnyMode = model.get('funnyMode')
+      updatedModel = model.set('funnyMode', !funnyMode)
+      newView = View(updatedModel, render)
+      return render(updatedModel, mapper('None'))
+
+    case 'UpdateEasterMessage':
+      updatedModel = model.set('easterEggMessage', message.payload);
+      newView = View(updatedModel, render);
+      return render(updatedModel, mapper('None'));
+
     case 'None':
       // $FlowFixMe
       return View(model, render)

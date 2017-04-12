@@ -44,6 +44,8 @@ export type ModelModelType =
   , payForm : PayFormModelType
   , reciveForm : ReciveFormModelType
   , error : string
+  , funnyMode: bool
+  , easterEggMessage: string
   };
 
 
@@ -211,6 +213,8 @@ export class Model extends ImmutableModel {
       payForm: this.payForm.toJS(),
       reciveForm: this.reciveForm.toJS(),
       error: this.error,
+      funnyMode: this.funnyMode,
+      easterEggMessage: this.easterEggMessage,
     };
   }
 
@@ -244,6 +248,22 @@ export class Model extends ImmutableModel {
 
   setError(error: string): this {
     return this.clone(this._state.set('error', error));
+  }
+
+  get funnyMode(): boolean {
+    return this._state.get('funnyMode');
+  }
+
+  setFunnyMode(funnyMode: boolean): this {
+    return this.clone(this._state.set('funnyMode', funnyMode));
+  }
+
+  get easterEggMessage(): string {
+    return this._state.get('easterEggMessage');
+  }
+
+  setEasterEggMessage(easterEggMessage: string): this {
+    return this.clone(this._state.set('easterEggMessage', easterEggMessage));
   }
 }
 
