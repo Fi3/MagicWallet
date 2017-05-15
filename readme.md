@@ -17,7 +17,7 @@ The application is composed by:
 4. A view
     1. `view` is done with React it take a `model` that should be `Model` and it create the HTML. `view` always must not contain a single bit of the app's state. So if we have a `model` of the app at time x we’ll be always capable of rebuilding the HTML at time x. The `view` also know nothing about `model` and interact with `model` only via `messages`
 5. The messages
-    1. `messages` are type of `Messages` that is `{type: Action, payload: mixed}` the action are the only way to the HTML to interact with the `model` every change that we can do at the `model` is declared as an action (to be more declarative possible) the `updater` is where the action are implemented as pure endofunctions from Model to Model
+    1. `messages` are type of `Messages` that is `{type: Action, payload: mixed}` the action are the only way to the HTML to interact with the `model` every change that we can do at the `model` is declared as an action (to be more declarative possible) the `updater` is where the action are implemented
 
 With this kind of architecture you have three advantage:
 1. is difficult to have runtime error because all the type are statically checked by Flow
